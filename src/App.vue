@@ -2,7 +2,7 @@
 	<div id="app">
 		<div class="columns">
 			<div class="column is-2">
-				<side-menu />
+				<menu-lateral />
 			</div>
 			<div class="column">
 				<router-view />
@@ -12,15 +12,20 @@
 </template>
 
 <script>
-import SideMenu from './components/SideMenu'
+import MenuLateral from './components/MenuLateral'
 
 export default {
 	name: 'App',
-	components: { SideMenu },
+	components: { MenuLateral },
 }
 </script>
 
 <style>
+
+@import '../node_modules/buefy/lib/buefy.css';
+@import '../node_modules/fullcalendar/dist/fullcalendar.css';
+
+
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }

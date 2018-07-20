@@ -5,7 +5,6 @@ import App from './App';
 import router from './router';
 
 import Buefy from 'buefy';
-import 'buefy/lib/buefy.css';
 
 Vue.use(Buefy, {
 	defaultIconPack: 'fas',
@@ -13,7 +12,6 @@ Vue.use(Buefy, {
 
 window.$ = require('jquery');
 import 'fullcalendar';
-import 'fullcalendar/dist/fullcalendar.css';
 
 Vue.config.productionTip = false;
 

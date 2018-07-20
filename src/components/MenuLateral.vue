@@ -1,5 +1,7 @@
 <template>
+
 	<aside class="menu">
+
 		<datepicker
 			:inline="true"
 			:language="ptBR"
@@ -7,39 +9,34 @@
 			maximum-view="day"
 			calendar-class="my-datepicker">
 		</datepicker>
+
 		<p class="menu-label">
-			General
+			Geral
 		</p>
+
 		<ul class="menu-list">
-			<li><a>Dashboard</a></li>
-			<li><a>Customers</a></li>
-		</ul>
-		<p class="menu-label">
-			Administration
-		</p>
-		<ul class="menu-list">
-			<li><a>Team Settings</a></li>
 			<li>
-				<a class="is-active">Manage Your Team</a>
-				<ul>
-					<li><a>Members</a></li>
-					<li><a>Plugins</a></li>
-					<li><a>Add a member</a></li>
-				</ul>
+				<router-link to="/" :class="{'is-active': $route.path === '/'}">
+					Início
+				</router-link>
 			</li>
-			<li><a>Invitations</a></li>
-			<li><a>Cloud Storage Environment Settings</a></li>
-			<li><a>Authentication</a></li>
+			<li>
+				<router-link to="/nova-reserva" :class="{'is-active': $route.path === '/nova-reserva'}">
+					Nova reserva
+				</router-link>
+			</li>
 		</ul>
+
 		<p class="menu-label">
-			Transactions
+			Relatórios
 		</p>
+
 		<ul class="menu-list">
-			<li><a>Payments</a></li>
-			<li><a>Transfers</a></li>
-			<li><a>Balance</a></li>
+			<li><a>Utilização</a></li>
 		</ul>
+
 	</aside>
+
 </template>
 
 <script>
@@ -59,8 +56,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.menu {
+	padding: 0.5em;
+}
+
 .my-datepicker {
 	border: none !important;
 	max-width: 200px;
