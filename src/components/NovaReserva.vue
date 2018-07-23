@@ -1,18 +1,120 @@
 <template>
-
 	<section class="section">
-		<b-field label="Espaço">
-            <b-select placeholder="Selecione um espaço">
-                <option
-                    v-for="espaco in espacos"
-                    :value="espaco.id"
-                    :key="espaco.id">
-                    {{ espaco.nome }}
-                </option>
-            </b-select>
-        </b-field>
-	</section>
+		<div class="form-section">
+			<b-field label="Espaço"
+					:type="evento.id_espaco === 1 ? 'is-danger' : null"
+					:message="evento.id_espaco === 1 ? 'Este espaço está ocupado no horário selecionado' : null">
+				<b-select 
+					placeholder="Selecione um espaço"
+					v-model="evento.id_espaco">
 
+					<option
+						v-for="espaco in espacos"
+						:value="espaco.id"
+						:key="espaco.id">
+						{{ espaco.nome }}
+					</option>
+				</b-select>
+			</b-field>
+		</div>
+
+		<div class="columns is-multiline">
+			<div :class="{
+				'column': true, 
+				'is-12': modoModal,
+				'is-12-tablet': !modoModal,
+				'is-half-desktop': !modoModal}">
+				<div class="form-section">
+					<div class="columns is-marginless">
+						<div class="column">
+							<b-field label="Data início">
+								<b-datepicker
+									placeholder="Clique para selecionar"
+									v-model="evento.data_inicio"
+									icon="calendar">
+								</b-datepicker>
+							</b-field>
+						</div>
+						<div class="column">
+							<b-field label="Horário início">
+								<b-timepicker
+									placeholder="Digite ou selecione um horário"
+									v-model="evento.data_inicio"
+									icon="clock"
+									:increment-minutes="15"
+									:readonly="false">
+								</b-timepicker>
+							</b-field>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div :class="{
+				'column': true, 
+				'is-12': modoModal,
+				'is-12-tablet': !modoModal,
+				'is-half-desktop': !modoModal}">
+				<div class="form-section">
+					<div class="columns is-marginless">
+						<div class="column">
+							<b-field label="Data fim">
+								<b-datepicker
+									placeholder="Clique para selecionar"
+									v-model="evento.data_fim"
+									icon="calendar">
+								</b-datepicker>
+							</b-field>
+						</div>
+						<div class="column">
+							<b-field label="Horário fim">
+								<b-timepicker
+									placeholder="Digite ou selecione um horário"
+									v-model="evento.data_fim"
+									icon="clock"
+									:increment-minutes="15"
+									:readonly="false">
+								</b-timepicker>
+							</b-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-section">
+			<b-field label="Tipo de evento">
+				<b-select 
+					placeholder="Selecione um tipo"
+					v-model="evento.id_tipo">
+					
+					<option
+						v-for="tipo in tipos"
+						:value="tipo.id"
+						:key="tipo.id">
+						{{ tipo.nome }}
+					</option>
+				</b-select>
+			</b-field>
+
+			<b-field label="Nome do evento">
+				<b-input 
+					placeholder="Digite o nome"
+					v-model="evento.nome">
+						
+				</b-input>
+			</b-field>
+
+			<b-field label="Organizador do evento">
+				<b-autocomplete placeholder="Digite um organizador"
+					:data="organizadores"
+					field="nome"
+					:keep-first="true">
+
+					<!-- <template slot="empty">No results found</template> -->
+				</b-autocomplete>
+			</b-field>
+		</div>
+	</section>
 </template>
 
 <script>
@@ -24,54 +126,53 @@ export default {
 	components: {
 		Datepicker
 	},
+	props: ['dataInicio', 'dataFim', 'modoModal', 'idEspaco'],
 	data () {
 		return {
+			evento: {
+				data_inicio: null,
+				data_fim: null,
+				id_espaco: null,
+				id_tipo: null,
+				id_organizador: null,
+				nome: '',
+			},
 			ptBR: ptBR,
+
+			// Os dados abaixo são de marcação, virão da base de dados
 			espacos: [
 				{id: 1, nome: 'Multiuso 1'}, 
 				{id: 2, nome: 'Multiuso 2'}, 
 				{id: 3, nome: 'Auditório'}
-				],
+			],
+			tipos: [
+				{id: 1, nome: 'Ensaio'},
+				{id: 2, nome: 'Gravação'},
+				{id: 3, nome: 'Sarau'},
+			],
+			organizadores: [
+				{id: 1, nome: 'Bicimanas'},
+				{id: 2, nome: 'Tarifa Zero'},
+			],
 		}
+	},
+	mounted () {
+		this.evento.data_inicio = this.dataInicio;
+		this.evento.data_fim = this.dataFim;
+		this.evento.id_espaco = this.idEspaco;
+	},
+	methods: {
 	}
 }
 </script>
 
-<style>
-.menu {
-	padding: 0.5em;
+<style scoped>
+.form-section {
+	border: 1px solid rgb(200, 200, 200);
+	border-radius: 5px;
+	padding: 1em;
+	margin: 0 0.5em 2em;
 }
 
-.my-datepicker {
-	border: none !important;
-	max-width: 200px;
-	font-size: 0.8rem;
-	padding-top: 0.8rem;
-}
 
-.my-datepicker header {
-	line-height: 20px !important;
-}
-
-.my-datepicker .cell {
-	color: $grey-light;
-	font-weight: lighter;
-	height: 20px !important;
-	line-height: 20px !important;
-
-}
-
-.my-datepicker .cell:not(.blank):not(.disabled).day:hover {
-	border: none !important;
-}
-
-.my-datepicker .cell.selected {
-	background: transparent !important;
-	// color: #E28931;
-}
-
-.my-datepicker .highlighted {
-	color: $black;
-	background-color: transparent !important
-}
 </style>

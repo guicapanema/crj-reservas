@@ -44,7 +44,7 @@ import Datepicker from 'vuejs-datepicker';
 import {ptBR} from 'vuejs-datepicker/dist/locale';
 
 export default {
-	name: 'SideMenu',
+	name: 'MenuLateral',
 	components: {
 		Datepicker
 	},

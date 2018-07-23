@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import MenuLateral from './components/MenuLateral'
+import MenuLateral from './components/MenuLateral';
 
 export default {
 	name: 'App',
