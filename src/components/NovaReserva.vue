@@ -4,7 +4,7 @@
 			<b-field label="Espaço"
 					:type="evento.id_espaco === 1 ? 'is-danger' : null"
 					:message="evento.id_espaco === 1 ? 'Este espaço está ocupado no horário selecionado' : null">
-				<b-select 
+				<b-select
 					placeholder="Selecione um espaço"
 					v-model="evento.id_espaco">
 
@@ -20,7 +20,7 @@
 
 		<div class="columns is-multiline">
 			<div :class="{
-				'column': true, 
+				'column': true,
 				'is-12': modoModal,
 				'is-12-tablet': !modoModal,
 				'is-half-desktop': !modoModal}">
@@ -42,15 +42,38 @@
 									v-model="evento.data_inicio"
 									icon="clock"
 									:increment-minutes="15"
-									:readonly="false">
+									:readonly="false"
+									:disabled="evento.dia_inteiro">
 								</b-timepicker>
+							</b-field>
+						</div>
+					</div>
+
+					<div class="columns is-marginless is-vcentered">
+						<div class="column is-narrow">
+							<b-field>
+								<b-checkbox v-model="evento.dia_inteiro">Dia inteiro</b-checkbox>
+							</b-field>
+						</div>
+						<div class="column">
+							<b-field>
+								<b-select
+									v-model="evento.repeticao"
+									placeholder="Não repete"
+									size="is-small"
+									@input="aoSelecionarRepeticao">
+									<option :value="null">Não repete</option>
+									<option value="diariamente">Repete diariamente</option>
+									<option value="semanalmente">Repete semanalmente</option>
+									<option value="customizar">Customizar...</option>
+								</b-select>
 							</b-field>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div :class="{
-				'column': true, 
+				'column': true,
 				'is-12': modoModal,
 				'is-12-tablet': !modoModal,
 				'is-half-desktop': !modoModal}">
@@ -72,7 +95,8 @@
 									v-model="evento.data_fim"
 									icon="clock"
 									:increment-minutes="15"
-									:readonly="false">
+									:readonly="false"
+									:disabled="evento.dia_inteiro">
 								</b-timepicker>
 							</b-field>
 						</div>
@@ -83,10 +107,10 @@
 
 		<div class="form-section">
 			<b-field label="Tipo de evento">
-				<b-select 
+				<b-select
 					placeholder="Selecione um tipo"
 					v-model="evento.id_tipo">
-					
+
 					<option
 						v-for="tipo in tipos"
 						:value="tipo.id"
@@ -97,10 +121,10 @@
 			</b-field>
 
 			<b-field label="Nome do evento">
-				<b-input 
+				<b-input
 					placeholder="Digite o nome"
 					v-model="evento.nome">
-						
+
 				</b-input>
 			</b-field>
 
@@ -132,6 +156,8 @@ export default {
 			evento: {
 				data_inicio: null,
 				data_fim: null,
+				dia_inteiro: false,
+				repeticao: null,
 				id_espaco: null,
 				id_tipo: null,
 				id_organizador: null,
@@ -141,8 +167,8 @@ export default {
 
 			// Os dados abaixo são de marcação, virão da base de dados
 			espacos: [
-				{id: 1, nome: 'Multiuso 1'}, 
-				{id: 2, nome: 'Multiuso 2'}, 
+				{id: 1, nome: 'Multiuso 1'},
+				{id: 2, nome: 'Multiuso 2'},
 				{id: 3, nome: 'Auditório'}
 			],
 			tipos: [
@@ -162,6 +188,11 @@ export default {
 		this.evento.id_espaco = this.idEspaco;
 	},
 	methods: {
+		aoSelecionarRepeticao(repeticao) {
+			if(repeticao === 'customizar') {
+				// TODO: Abrir modal
+			}
+		}
 	}
 }
 </script>
