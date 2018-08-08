@@ -138,6 +138,25 @@
 				</b-autocomplete>
 			</b-field>
 		</div>
+
+		<b-modal :active.sync="modalRepeticaoAberto" has-modal-card>
+			<div class="modal-card">
+				<header class="modal-card-head">
+					<p class="modal-card-title">Repetição customizada</p>
+				</header>
+				<section class="modal-card-body">
+					<repeticao-customizada />
+				</section>
+				<footer class="modal-card-foot">
+					<button class="button" type="button" @click="modalRepeticaoAberto = false">
+						Cancelar
+					</button>
+					<button class="button is-primary">
+						Salvar
+					</button>
+				</footer>
+			</div>
+		</b-modal>
 	</section>
 </template>
 
@@ -145,10 +164,13 @@
 import Datepicker from 'vuejs-datepicker';
 import {ptBR} from 'vuejs-datepicker/dist/locale';
 
+import RepeticaoCustomizada from './RepeticaoCustomizada';
+
 export default {
 	name: 'SideMenu',
 	components: {
-		Datepicker
+		Datepicker,
+		RepeticaoCustomizada
 	},
 	props: ['dataInicio', 'dataFim', 'modoModal', 'idEspaco'],
 	data () {
@@ -171,6 +193,7 @@ export default {
 				{id: 2, nome: 'Multiuso 2'},
 				{id: 3, nome: 'Auditório'}
 			],
+			modalRepeticaoAberto: false,
 			tipos: [
 				{id: 1, nome: 'Ensaio'},
 				{id: 2, nome: 'Gravação'},
@@ -190,7 +213,7 @@ export default {
 	methods: {
 		aoSelecionarRepeticao(repeticao) {
 			if(repeticao === 'customizar') {
-				// TODO: Abrir modal
+				this.modalRepeticaoAberto = true;
 			}
 		}
 	}
